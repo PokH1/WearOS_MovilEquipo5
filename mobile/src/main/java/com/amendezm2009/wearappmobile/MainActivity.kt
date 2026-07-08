@@ -68,7 +68,6 @@ import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-// --- Diseño Profesional: Paleta de Colores ---
 val DeepNavy = Color(0xFF0F172A)
 val CardSurface = Color(0xFF1E293B)
 val NeonBlue = Color(0xFF00E5FF)
@@ -250,8 +249,6 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener, Mess
     }
 }
 
-// --- Componentes UI Rediseñados ---
-
 data class VitalsData(
     val pressure: Float?, val temperature: Float?, val heartRate: Float?,
     val heartBeat: Float?, val battery: Int?, val humidity: Float?,
@@ -286,7 +283,7 @@ fun MainDashboard(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .statusBarsPadding() // Agrega padding para la barra de estado
+                    .statusBarsPadding() 
                     .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -373,7 +370,7 @@ fun StepProgressCard(steps: Int, goal: Int, onStepChange: (Int) -> Unit) {
                     onClick = { onStepChange((steps - 10).coerceAtLeast(0)) },
                     colors = IconButtonDefaults.filledIconButtonColors(containerColor = GlassWhite)
                 ) {
-                    Icon(Icons.Default.Remove, contentDescription = "Menos 10 pasos", tint = Color.White)
+                    Icon(Icons.Default.Remove, contentDescription = "-10 pasos", tint = Color.White)
                 }
                 
                 Text("Ajustar Pasos", style = MaterialTheme.typography.labelMedium, color = Color.Gray)
@@ -382,7 +379,7 @@ fun StepProgressCard(steps: Int, goal: Int, onStepChange: (Int) -> Unit) {
                     onClick = { onStepChange(steps + 10) },
                     colors = IconButtonDefaults.filledIconButtonColors(containerColor = NeonGreen)
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Más 10 pasos", tint = Color.Black)
+                    Icon(Icons.Default.Add, contentDescription = "+10 pasos", tint = Color.Black)
                 }
             }
         }
@@ -392,7 +389,7 @@ fun StepProgressCard(steps: Int, goal: Int, onStepChange: (Int) -> Unit) {
 @Composable
 fun VitalsGrid(vitals: VitalsData) {
     val items = listOf(
-        VitalItem("Ritmo", "${vitals.heartRate?.toInt() ?: "--"} bpm", Icons.Default.Favorite, SoftRed),
+        VitalItem("Ritmo cardiaco", "${vitals.heartRate?.toInt() ?: "--"} bpm", Icons.Default.Favorite, SoftRed),
         VitalItem("Batería", "${vitals.battery ?: "--"}%", Icons.Default.BatteryChargingFull, NeonBlue),
         VitalItem("Temp", "${vitals.temperature?.toInt() ?: "--"}°C", Icons.Default.Thermostat, Color.Yellow),
         VitalItem("Presión", "${vitals.pressure?.toInt() ?: "--"} hPa", Icons.Default.Cloud, Color.Cyan),
