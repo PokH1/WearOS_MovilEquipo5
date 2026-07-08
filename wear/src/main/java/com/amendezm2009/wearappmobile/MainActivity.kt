@@ -63,12 +63,11 @@ import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import com.amendezm2009.wearappmobile.ui.theme.WearAppTheme
 
-// --- TACTICAL HUD COLORS ---
-val HUD_Primary = Color(0xFF00FFD1) // Cyan Eléctrico
-val HUD_Secondary = Color(0xFF0088FF) // Azul Profundo
-val HUD_Accent = Color(0xFFFF2D55) // Rojo Neón
-val HUD_Warning = Color(0xFFFFE600) // Amarillo Alerta
-val HUD_Bg = Color(0xFF050505) // Negro casi absoluto
+val HUD_Primary = Color(0xFF00FFD1) 
+val HUD_Secondary = Color(0xFF0088FF)
+val HUD_Accent = Color(0xFFFF2D55) 
+val HUD_Warning = Color(0xFFFFE600) 
+val HUD_Bg = Color(0xFF050505) 
 
 class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnMessageReceivedListener, DataClient.OnDataChangedListener {
     private lateinit var sensorManager: SensorManager
@@ -76,8 +75,7 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
     private var stepGoal = 10000
     private val scope = CoroutineScope(Dispatchers.Main)
     private val dataClient by lazy { Wearable.getDataClient(this) }
-    
-    // Estados de Sensores
+
     private var pressure by mutableStateOf<Float?>(null)
     private var temperature by mutableStateOf<Float?>(null)
     private var heartRate by mutableStateOf<Float?>(null)
@@ -88,7 +86,6 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
     private var light by mutableStateOf<Float?>(null)
     private var magneticField by mutableStateOf<Float?>(null)
 
-    // Sensores
     private var stepSensor: Sensor? = null
     private var pressureSensor: Sensor? = null
     private var temperatureSensor: Sensor? = null
@@ -153,10 +150,9 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
         
         Scaffold(
             modifier = Modifier.fillMaxSize().background(HUD_Bg),
-            timeText = { } // Deshabilitado para usar nuestro propio reloj
+            timeText = { } 
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                // Efecto de Scanlines de fondo
                 ScanlineBackground()
 
                 HorizontalPager(state = pagerState) { page ->
@@ -167,12 +163,10 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
                     }
                 }
 
-                // Reloj Minimalista en el tope
                 Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp), contentAlignment = Alignment.TopCenter) {
                     CustomDigitalClock()
                 }
 
-                // Indicador Lateral Moderno
                 SidePageIndicator(pagerState.currentPage, 3)
 
                 if (showNotification) {
@@ -245,8 +239,6 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
                 Text("META: $goal", fontSize = 10.sp, color = HUD_Primary.copy(0.6f))
 
                 Spacer(modifier = Modifier.height(15.dp))
-
-                // Batería como barra de energía
                 EnergyBar(battery ?: 0)
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -422,12 +414,11 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
             val center = Offset(size.width / 2, size.height / 2)
             val length = 20.dp.toPx() * pulse
             val gap = 40.dp.toPx()
-            
-            // Líneas de mira
-            drawLine(HUD_Primary, Offset(center.x, center.y - gap), Offset(center.x, center.y - gap - length), 2f)
-            drawLine(HUD_Primary, Offset(center.x, center.y + gap), Offset(center.x, center.y + gap + length), 2f)
-            drawLine(HUD_Primary, Offset(center.x - gap, center.y), Offset(center.x - gap - length, center.y), 2f)
-            drawLine(HUD_Primary, Offset(center.x + gap, center.y), Offset(center.x + gap + length, center.y), 2f)
+
+            drawLine(HUD_Primary, Offset(center.x, center.y - gap), Offset(center.x, center.y - gap - length), 3f)
+            drawLine(HUD_Primary, Offset(center.x, center.y + gap), Offset(center.x, center.y + gap + length), 3f)
+            drawLine(HUD_Primary, Offset(center.x - gap, center.y), Offset(center.x - gap - length, center.y), 3f)
+            drawLine(HUD_Primary, Offset(center.x + gap, center.y), Offset(center.x + gap + length, center.y), 3f)
         }
     }
 
@@ -495,8 +486,6 @@ class MainActivity : ComponentActivity(), SensorEventListener, MessageClient.OnM
             }
         }
     }
-
-    // --- Lógica de Permisos y Sensores (Sin cambios funcionales) ---
 
     private fun checkAndRequestPermissions() {
         val ar = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
